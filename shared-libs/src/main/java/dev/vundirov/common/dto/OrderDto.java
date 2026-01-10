@@ -1,6 +1,5 @@
 package dev.vundirov.common.dto;
 
-import dev.vundirov.orderservice.domain.entities.Order;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;

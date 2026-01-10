@@ -26,12 +26,13 @@ public class KafkaConfiguration {
   public static final String PAYMENT_PROCESS_TOPIC = "payment-process";
   public static final String ORDER_CREATED_TOPIC = "order-created";
   public static final String STOCK_PROCESSED_TOPIC = "stock-processed";
-
+  private final String DEFAULT_BOOTSTRAP_SERVER = "localhost:9092";
   @Bean
   DefaultKafkaProducerFactory<String, Object> objectProducerFactory(
           KafkaProperties properties) {
     Map<String, Object> producerProperties =
             properties.buildProducerProperties(null);
+    producerProperties.putIfAbsent(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, DEFAULT_BOOTSTRAP_SERVER);
     producerProperties.put(
             ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     producerProperties.put(
@@ -50,6 +51,8 @@ public class KafkaConfiguration {
   public ConsumerFactory<String, Object> objectConsumerFactory(
           KafkaProperties kafkaProperties) {
     Map<String, Object> props = kafkaProperties.buildConsumerProperties(null);
+    props.putIfAbsent(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+            DEFAULT_BOOTSTRAP_SERVER);
     props.put(
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
             StringDeserializer.class
@@ -59,7 +62,7 @@ public class KafkaConfiguration {
             JsonDeserializer.class
     );
     props.put(JsonDeserializer.TRUSTED_PACKAGES, "java.lang,dev.vundirov" +
-            ".common.dto");
+            ".common.dto.kafka");
     return new DefaultKafkaConsumerFactory<>(props);
   }
 
@@ -96,5 +99,5 @@ public class KafkaConfiguration {
             .replicas(1)
             .build();
   }
- 
+
 }
