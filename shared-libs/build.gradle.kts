@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.testImplementation
+
 plugins {
     `java-library`
     id("io.spring.dependency-management")
@@ -27,7 +29,16 @@ dependencies {
 
 
 
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.kafka:spring-kafka-test")
 
+    // Testcontainers
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:kafka")
+
+    // Awaitility для асинхронных тестов
+    testImplementation("org.awaitility:awaitility:4.2.0")
     // lombok
     implementation("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -39,6 +50,9 @@ dependencies {
     // Тесты
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+
+
+
 }
 
 tasks.test {

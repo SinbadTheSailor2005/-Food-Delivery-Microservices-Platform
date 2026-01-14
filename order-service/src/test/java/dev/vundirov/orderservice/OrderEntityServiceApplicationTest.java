@@ -1,4 +1,4 @@
-package dev.sorokin.orderservice;
+package dev.vundirov.orderservice;
 
 
 import dev.vundirov.app.KafkaConfiguration;
