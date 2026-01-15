@@ -20,6 +20,23 @@ pipeline {
                }
            }
        }
+ stage('Run Tests') {
+     steps {
+         echo "Running Gradle Tests in Parallel..."
+         parallel(
+             "Order Service": {
+                 sh "docker compose -f ${COMPOSE_FILE} run --rm order-service ./gradlew test"
+             },
+             "Payment Service": {
+                 sh "docker compose -f ${COMPOSE_FILE} run --rm payment-service ./gradlew test"
+             },
+             "Warehouse Service": {
+                 sh "docker compose -f ${COMPOSE_FILE} run --rm warehouse-service ./gradlew test"
+             }
+         )
+     }
+ 
+ }
         stage('Stop Old Containers') {
             steps {
                 sh "docker compose -f ${COMPOSE_FILE} down || true"
