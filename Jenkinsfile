@@ -1,28 +1,50 @@
 pipeline {
-    agent{
-        any
-    }
+    agent any
+
     environment {
         COMPOSE_FILE = 'docker-compose.yaml'
     }
 
-    stages{
+    stages {
         stage('Checkout') {
-            steps{
+            steps {
                 checkout scm
             }
         }
+
+       stage('Prepare Environment') {
+           steps {
+               withCredentials([file(credentialsId: 'my-app-env', variable: 'ENV_FILE')]) {
+
+                   sh 'cp \$ENV_FILE .env'
+               }
+           }
+       }
         stage('Stop Old Containers') {
-            steps{
+            steps {
                 sh "docker compose -f ${COMPOSE_FILE} down || true"
             }
         }
+
         stage('Build & Deploy') {
-            sh "docker compose -f ${COMPOSE_FILE} up -d --build"
+            steps { 
+                sh "docker compose -f ${COMPOSE_FILE} up -d --build"
+            }
         }
 
         stage('Cleanup') {
-            sh "docker image prune -f "
+            steps { 
+                sh "docker image prune -f"
+            }
+        }
+    }
+    
+    post {
+        failure {
+            echo "Build Failed."
+        }
+        success {
+            echo "Build Success"
         }
     }
 }
