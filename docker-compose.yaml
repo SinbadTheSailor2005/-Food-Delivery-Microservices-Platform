@@ -5,7 +5,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - postgres-payment_data:/var/lib/postgresql/data
+      - postgres-payment_data:/var/lib/postgresql
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -23,7 +23,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres-order_data:/var/lib/postgresql/data
+      - postgres-order_data:/var/lib/postgresql
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -41,7 +41,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - postgres-warehouse_data:/var/lib/postgresql/data
+      - postgres-warehouse_data:/var/lib/postgresql
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
