@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-payment-pvc
+  namespace: delivery-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard  # Use 'gp3' for AWS, 'pd-ssd' for GCP, 'managed-premium' for Azure
+  resources:
+    requests:
+      storage: 5Gi  # Use 20Gi for production

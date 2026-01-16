@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kafka-pvc
+  namespace: delivery-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard  # Use 'gp3' for AWS, 'pd-ssd' for GCP, 'managed-premium' for Azure
+  resources:
+    requests:
+      storage: 10Gi  # Use 50Gi for production

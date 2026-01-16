@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-service-config
+  namespace: delivery-system
+data:
+  DB_NAME: "orders"
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-0.kafka-headless:29092"
+  SERVER_PORT: "8080"

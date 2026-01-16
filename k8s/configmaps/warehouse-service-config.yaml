@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: warehouse-service-config
+  namespace: delivery-system
+data:
+  DB_NAME: "warehouse"
+  KAFKA_BOOTSTRAP_SERVERS: "kafka-0.kafka-headless:29092"
+  SERVER_PORT: "8083"
